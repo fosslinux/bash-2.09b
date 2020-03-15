@@ -33,6 +33,8 @@
 
 #include "syntax.h"
 
+#include "getopt.h"
+
 extern int optind;
 extern char *optarg;
 

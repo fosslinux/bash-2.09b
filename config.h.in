@@ -871,8 +871,10 @@
 
 #undef DUP2_BROKEN
 
-#undef GETCWD_BROKEN
-
 #include "config-bot.h"
+
+#define endpwent(x) 0
+
+#define enable_hostname_completion(on_or_off) 0
 
 #endif /* _CONFIG_H_ */

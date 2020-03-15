@@ -91,14 +91,14 @@ RL_LIBSRC = $(topdir)/lib/readline
 # How to make a .o file from a .def file.
 .def.o:
 	$(RM) $@
-	./$(MKBUILTINS) $(DIRECTDEFINE) $<
+	../../gash-assets/gash -c "./$(MKBUILTINS) $(DIRECTDEFINE) $<"
 	$(CC) -c $(CCFLAGS) $*.c || ( $(RM) $*.c ; exit 1 )
 	$(RM) $*.c
 
 # How to make a .c file from a .def file.
 .def.c:
 	$(RM) $@
-	./$(MKBUILTINS) $(DIRECTDEFINE) $<
+	../../gash-assets/gash -c "./$(MKBUILTINS) $(DIRECTDEFINE) $<"
 
 # default rule for making a .o file from a .c file
 .c.o:
@@ -144,8 +144,7 @@ libbuiltins.a: $(MKBUILTINS) $(OFILES) builtins.o
 builtext.h builtins.c: $(MKBUILTINS) $(DEFSRC)
 	@-if test -f builtins.c; then mv -f builtins.c old-builtins.c; fi
 	@-if test -f builtext.h; then mv -f builtext.h old-builtext.h; fi
-	./$(MKBUILTINS) -externfile builtext.h -structfile builtins.c \
-	    -noproduction $(DIRECTDEFINE) $(HELPDIRDEFINE) $(DEFSRC)
+	../../gash-assets/gash -c "./$(MKBUILTINS) -externfile builtext.h -structfile builtins.c -noproduction $(DIRECTDEFINE) $(HELPDIRDEFINE) $(DEFSRC)"
 	@-if cmp -s old-builtext.h builtext.h 2>/dev/null; then \
 		mv old-builtext.h builtext.h; \
 	 else \
@@ -158,7 +157,7 @@ builtext.h builtins.c: $(MKBUILTINS) $(DEFSRC)
 	 fi
 
 helpdoc:	$(MKBUILTINS) $(DEFSRC)
-	./$(MKBUILTINS) ${HELPDIRDEFINE} -noproduction $(DIRECTDEFINE) $(DEFSRC)
+	../../gash-assets/gash -c "./$(MKBUILTINS) ${HELPDIRDEFINE} -noproduction $(DIRECTDEFINE) $(DEFSRC)"
 
 install-help:
 	@-if test -n "${HELPDIR}" && test -d helpfiles ; then \
@@ -200,7 +199,7 @@ psize.aux:	psize.c
 documentation: builtins.texi
 
 builtins.texi: $(MKBUILTINS)
-	./$(MKBUILTINS) -documentonly $(DEFSRC)
+	../../gash-assets/gash -c "./$(MKBUILTINS) -documentonly $(DEFSRC)"
 
 clean:
 	$(RM) $(OFILES) $(CREATED_FILES) $(MKBUILTINS) mkbuiltins.o libbuiltins.a

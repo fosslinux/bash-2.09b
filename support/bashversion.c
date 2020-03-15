@@ -28,6 +28,8 @@
 #  include <unistd.h>
 #endif
 
+#include "getopt.h"
+
 #include "bashansi.h"
 
 #include "version.h"

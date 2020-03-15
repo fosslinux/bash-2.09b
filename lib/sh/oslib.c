@@ -192,8 +192,7 @@ bzero (s, n)
 #    include <sys/utsname.h>
 int
 gethostname (name, namelen)
-     char *name;
-     int namelen;
+     char *name; int namelen;
 {
   int i;
   struct utsname ut;
@@ -209,7 +208,7 @@ gethostname (name, namelen)
 #  else /* !HAVE_UNAME */
 int
 gethostname (name, namelen)
-     int name, namelen;
+     char* name; int namelen;
 {
   strncpy (name, "unknown", namelen);
   name[namelen] = '\0';

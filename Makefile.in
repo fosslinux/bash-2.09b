@@ -503,7 +503,7 @@ version.h:  $(SOURCES) config.h Makefile
 		&& mv newversion.h version.h
 
 bashversion$(EXEEXT):	patchlevel.h conftypes.h version.h buildversion.o $(SUPPORT_SRC)bashversion.c
-	$(CC_FOR_BUILD) $(CCFLAGS_FOR_BUILD) -o $@ $(SUPPORT_SRC)bashversion.c buildversion.o
+	$(CC_FOR_BUILD) $(CCFLAGS_FOR_BUILD) -o $@ $(SUPPORT_SRC)bashversion.c $(srcdir)/getopt.c buildversion.o
 
 buildversion.o: version.h conftypes.h patchlevel.h $(srcdir)/version.c
 	$(CC_FOR_BUILD) $(CCFLAGS_FOR_BUILD) -c -o $@ $(srcdir)/version.c
@@ -562,13 +562,13 @@ mksignames$(EXEEXT):	$(SUPPORT_SRC)mksignames.c
 	$(CC_FOR_BUILD) $(CCFLAGS_FOR_BUILD) -o $@ $(SUPPORT_SRC)mksignames.c
 
 mksyntax$(EXEEXT):	${srcdir}/mksyntax.c config.h syntax.h ${BASHINCDIR}/chartypes.h
-	${CC_FOR_BUILD} ${CCFLAGS_FOR_BUILD} -o $@ ${srcdir}/mksyntax.c
+	${CC_FOR_BUILD} ${CCFLAGS_FOR_BUILD} -o $@ ${srcdir}/mksyntax.c ${srcdir}/getopt.c
 
 # make a list of signals for the local system -- this is done when we're
 # *not* cross-compiling
 lsignames.h:   mksignames$(EXEEXT)
 	$(RM) $@
-	./mksignames $@
+	../gash-assets/gash -c "./mksignames $@"
 
 # copy the correct signames header file to signames.h
 signames.h: $(SIGNAMES_H)
@@ -576,7 +576,7 @@ signames.h: $(SIGNAMES_H)
 
 syntax.c:	mksyntax${EXEEXT} $(srcdir)/syntax.h 
 	$(RM) $@
-	./mksyntax -o $@
+	../gash-assets/gash -c "./mksyntax -o $@"
 
 $(BUILTINS_LIBRARY): $(BUILTIN_DEFS) $(BUILTIN_C_SRC) config.h ${BASHINCDIR}/memalloc.h
 	@(cd $(DEFDIR) && $(MAKE) $(MFLAGS) DEBUG=${DEBUG} libbuiltins.a ) || exit 1

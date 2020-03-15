@@ -376,7 +376,7 @@ static void xfree __P((void *));
 	    if ((p)->flags & PF_STAR_P) \
 	      (p)->precision = GETARG (int)
 
-#if defined (HAVE_LOCALE_H)
+#if 0
 #  define GETLOCALEDATA(d, t, g) \
       do \
 	{ \
