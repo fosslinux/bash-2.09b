@@ -4,6 +4,9 @@ Makefile
 autom4te.cache/
 .build
 .made
+conftest
+confdefs.h
+
 # dynamically generated files
 builtins/builtext.h
 builtins/builtins.c
