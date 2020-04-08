@@ -1,4 +1,4 @@
-#!/bin/sh -
+#!gash
 #
 # bashbug - create a bug report and mail it to the bug address
 #
