@@ -124,7 +124,7 @@ case $maybe_os in
     ;;
   *)
     basic_machine=`echo $1 | sed 's/-[^-]*$//'`
-    if [ $basic_machine != $1 ]
+    if test $basic_machine != $1
     then os=`echo $1 | sed 's/.*-/-/'`
     else os=; fi
     ;;
@@ -1088,7 +1088,7 @@ esac
 
 # Decode manufacturer-specific aliases for certain operating systems.
 
-if [ x"$os" != x"" ]
+if test x"$os" != x""
 then
 case $os in
         # First match some system type aliases

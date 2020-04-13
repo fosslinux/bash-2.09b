@@ -51,7 +51,7 @@ src=""
 dst=""
 dir_arg=""
 
-while [ x"$1" != x ]; do
+while test x"$1" != x ; do
     case $1 in
 	-c) instcmd="$cpprog"
 	    shift
@@ -88,7 +88,7 @@ while [ x"$1" != x ]; do
 	    shift
 	    continue;;
 
-	*)  if [ x"$src" = x ]
+	*)  if test x"$src" = x
 	    then
 		src=$1
 	    else
@@ -101,7 +101,7 @@ while [ x"$1" != x ]; do
     esac
 done
 
-if [ x"$src" = x ]
+if test x"$src" = x
 then
 	echo "install:	no input file specified"
 	exit 1
@@ -109,11 +109,11 @@ else
 	true
 fi
 
-if [ x"$dir_arg" != x ]; then
+if test x"$dir_arg" != x ; then
 	dst=$src
 	src=""
 	
-	if [ -d $dst ]; then
+	if test -d $dst ; then
 		instcmd=:
 	else
 		instcmd=mkdir
@@ -124,7 +124,7 @@ else
 # might cause directories to be created, which would be especially bad 
 # if $src (and thus $dsttmp) contains '*'.
 
-	if [ -f $src -o -d $src ]
+	if test -f $src -o -d $src
 	then
 		true
 	else
@@ -132,7 +132,7 @@ else
 		exit 1
 	fi
 	
-	if [ x"$dst" = x ]
+	if test x"$dst" = x
 	then
 		echo "install:	no destination specified"
 		exit 1
@@ -143,7 +143,7 @@ else
 # If destination is a directory, append the input filename; if your system
 # does not like double slashes in filenames, you may need to add some logic
 
-	if [ -d $dst ]
+	if test -d $dst
 	then
 		dst="$dst"/`basename $src`
 	else
@@ -158,7 +158,7 @@ dstdir=`echo $dst | sed -e 's,[^/]*$,,;s,/$,,;s,^$,.,'`
 #  this part is taken from Noah Friedman's mkinstalldirs script
 
 # Skip lots of stat calls in the usual case.
-if [ ! -d "$dstdir" ]; then
+if test ! -d "$dstdir" ; then
 defaultIFS='	
 '
 IFS="${IFS-${defaultIFS}}"
@@ -175,7 +175,7 @@ while [ $# -ne 0 ] ; do
 	pathcomp="${pathcomp}${1}"
 	shift
 
-	if [ ! -d "${pathcomp}" ] ;
+	if test ! -d "${pathcomp}" ;
         then
 		$mkdirprog "${pathcomp}"
 	else
@@ -186,19 +186,19 @@ while [ $# -ne 0 ] ; do
 done
 fi
 
-if [ x"$dir_arg" != x ]
+if test x"$dir_arg" != x
 then
 	$doit $instcmd $dst &&
 
-	if [ x"$chowncmd" != x ]; then $doit $chowncmd $dst; else true ; fi &&
-	if [ x"$chgrpcmd" != x ]; then $doit $chgrpcmd $dst; else true ; fi &&
-	if [ x"$stripcmd" != x ]; then $doit $stripcmd $dst; else true ; fi &&
-	if [ x"$chmodcmd" != x ]; then $doit $chmodcmd $dst; else true ; fi
+	if test x"$chowncmd" != x ; then $doit $chowncmd $dst; else true ; fi &&
+	if test x"$chgrpcmd" != x ; then $doit $chgrpcmd $dst; else true ; fi &&
+	if test x"$stripcmd" != x ; then $doit $stripcmd $dst; else true ; fi &&
+	if test x"$chmodcmd" != x ; then $doit $chmodcmd $dst; else true ; fi
 else
 
 # If we're going to rename the final executable, determine the name now.
 
-	if [ x"$transformarg" = x ] 
+	if test x"$transformarg" = x
 	then
 		dstfile=`basename $dst`
 	else
@@ -208,7 +208,7 @@ else
 
 # don't allow the sed command to completely eliminate the filename
 
-	if [ x"$dstfile" = x ] 
+	if test x"$dstfile" = x
 	then
 		dstfile=`basename $dst`
 	else
@@ -231,10 +231,10 @@ else
 # ignore errors from any of these, just make sure not to ignore
 # errors from the above "$doit $instcmd $src $dsttmp" command.
 
-	if [ x"$chowncmd" != x ]; then $doit $chowncmd $dsttmp; else true;fi &&
-	if [ x"$chgrpcmd" != x ]; then $doit $chgrpcmd $dsttmp; else true;fi &&
-	if [ x"$stripcmd" != x ]; then $doit $stripcmd $dsttmp; else true;fi &&
-	if [ x"$chmodcmd" != x ]; then $doit $chmodcmd $dsttmp; else true;fi &&
+	if test x"$chowncmd" != x ; then $doit $chowncmd $dsttmp; else true;fi &&
+	if test x"$chgrpcmd" != x ; then $doit $chgrpcmd $dsttmp; else true;fi &&
+	if test x"$stripcmd" != x ; then $doit $stripcmd $dsttmp; else true;fi &&
+	if test x"$chmodcmd" != x ; then $doit $chmodcmd $dsttmp; else true;fi &&
 
 # Now rename the file to the real destination.
 
